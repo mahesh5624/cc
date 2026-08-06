@@ -451,4 +451,170 @@ Process finished with exit code 0
 </dependency>
 
 
+////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 
+1.Build a React application to demonstrate JSX and Virtual DOM
+npm create vite@latest jsx-demo -- --template react 
+cd jsx-demo 
+npm install 
+npm run dev
+ ,,,,,,,App.jsx<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+// exp1
+
+// import { useState } from "react";
+
+// function App() {
+//   const [count, setCount] = useState(0);
+
+//   return (
+//     <div>
+//       <h1>JSX and Virtual DOM Demo</h1>
+
+//       <p>Count: {count}</p>
+
+//       <button onClick={() => setCount(count + 1)}>
+//         Increment
+//       </button>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+// // exp2  2. Product Listing Page Using React Components
+
+// import ProductCard from "./ProductCard";
+
+// function App() {
+
+//   const products = [
+//     { id: 1, name: "Laptop", price: 50000, category: "Electronics" },
+//     { id: 2, name: "Mobile", price: 20000, category: "Electronics" },
+//     { id: 3, name: "Shoes", price: 1500, category: "Fashion" }
+//   ];
+
+//   return (
+//     <div>
+//       <h1>Product Listing</h1>
+
+//       {products.map((product) => (
+//         <ProductCard
+//           key={product.id}
+//           name={product.name}
+//           price={product.price}
+//           category={product.category}
+//         />
+//       ))}
+//     </div>
+//   );
+// }
+
+// export default App;
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// exp3   3.Inventory Management Application Using React Hooks  
+
+
+import { useState, useMemo, useEffect } from "react";
+
+function App() {
+  const [products, setProducts] = useState([
+    { name: "Laptop", price: 50000 },
+    { name: "Mobile", price: 20000 }
+  ]);
+
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+
+  const totalValue = useMemo(() => {
+    return products.reduce((sum, product) => sum + product.price, 0);
+  }, [products]);
+
+  useEffect(() => {
+    console.log("Products Updated");
+  }, [products]);
+
+  const addProduct = () => {
+    if (!name || !price) return;
+
+    setProducts([
+      ...products,
+      { name, price: Number(price) }
+    ]);
+
+    setName("");
+    setPrice("");
+  };
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h1>Inventory Management</h1>
+
+      <input
+        placeholder="Product Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+
+      <br /><br />
+
+      <input
+        placeholder="Price"
+        value={price}
+        onChange={(e) => setPrice(e.target.value)}
+      />
+
+      <br /><br />
+
+      <button onClick={addProduct}>
+        Add Product
+      </button>
+
+      <hr />
+
+      {products.map((product, index) => (
+        <div key={index}>
+          {product.name} - ₹{product.price}
+        </div>
+      ))}
+
+      <h3>Total Inventory Value: ₹{totalValue}</h3>
+    </div>
+  );
+}
+
+export default App;
+
+
+2ndQ ki 
+ProductCard.jsx
+///////////
+
+function ProductCard({ name, price, category }) {
+  return (
+    <div style={{
+      border: "1px solid black",
+      margin: "10px",
+      padding: "10px"
+    }}>
+      <h3>{name}</h3>
+      <p>Price: ₹{price}</p>
+      <p>Category: {category}</p>
+
+      <button onClick={() => alert(`${name} Purchased`)}>
+        Buy Now
+      </button>
+    </div>
+  );
+}
+
+export default ProductCard;
